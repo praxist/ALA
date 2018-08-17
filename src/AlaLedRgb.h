@@ -7,7 +7,7 @@
 
 /**
  *  AlaLedRgb can be used to drive a single or multiple RGB leds to perform animations.
- *  Available drivers are PWM pin, TLC5940, WS2811.
+ *  Available drivers are PWM pin, WS2811.
  */
 class AlaLedRgb
 {
@@ -18,7 +18,6 @@ public:
 
     void initPWM(byte pinsRed, byte pinGreen, byte pinBlue);
     void initPWM(int numLeds, byte *pins);
-    void initTLC5940(int numLeds, byte *pins);
 
     /**
     * Initializes WS2812 LEDs. It be invoked in the setup() function of the main Arduino sketch.
@@ -91,7 +90,7 @@ private:
     void bubbles();
 
 
-    byte driver;    // type of led driver: ALA_PWM, ALA_TLC5940
+    byte driver;    // type of led driver: ALA_PWM
     byte *pins;     // pins where the leds are attached to
     AlaColor *leds; // array to store leds brightness values
     int numLeds;    // number of leds

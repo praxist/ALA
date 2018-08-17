@@ -95,7 +95,7 @@
    || defined (__AVR_ATmega1281__) \
    || defined (__AVR_ATmega2560__) \
    || defined (__AVR_ATmega2561__)
-   
+
 /* Arduino Mega */
 #include "Arduino_Mega.h"
 
@@ -111,7 +111,8 @@
 #include "Teensypp_xxx6.h"
 
 #else
-#error "Unknown Chip!"
+//#error "Unknown Chip!"
+#include "Teensy3.h"
 #endif
 
 #endif

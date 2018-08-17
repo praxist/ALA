@@ -2,7 +2,6 @@
 #include "AlaLedRgb.h"
 
 #include "ExtNeoPixel.h"
-#include "ExtTlc5940.h"
 
 
 
@@ -47,24 +46,6 @@ void AlaLedRgb::initPWM(int numLeds, byte *pins)
     memset(leds, 0, 3*numLeds);
 }
 
-void AlaLedRgb::initTLC5940(int numLeds, byte *pins)
-{
-    this->driver = ALA_TLC5940;
-    this->numLeds = numLeds;
-    this->pins = pins;
-
-    // allocate and clear leds array
-    leds = (AlaColor *)malloc(3*numLeds);
-    memset(leds, 0, 3*numLeds);
-
-    // call Tlc.init only once
-    static bool isTlcInit = false;
-    if(!isTlcInit)
-    {
-        Tlc.init(0);
-        isTlcInit=true;
-    }
-}
 
 void AlaLedRgb::initWS2812(int numLeds, byte pin, byte type)
 {
@@ -167,7 +148,7 @@ bool AlaLedRgb::runAnimation()
 {
     if(animation == ALA_STOPSEQ)
         return true;
-    
+
     // skip the refresh if not enough time has passed since last update
     unsigned long cTime = millis();
     if (cTime < lastRefreshTime + refreshMillis)
@@ -210,18 +191,6 @@ bool AlaLedRgb::runAnimation()
             analogWrite(pins[j+1], (leds[i].g*maxOut.g)>>8);
             analogWrite(pins[j+2], (leds[i].b*maxOut.b)>>8);
         }
-    }
-    else if(driver==ALA_TLC5940)
-    {
-        // TLC5940 maximum output is 4095 so shifts only 4 bits
-        for(int i=0; i<numLeds; i++)
-        {
-            int j = 3*i;
-            Tlc.set(pins[j],   (leds[i].r*maxOut.r)>>4);
-            Tlc.set(pins[j+1], (leds[i].g*maxOut.g)>>4);
-            Tlc.set(pins[j+2], (leds[i].b*maxOut.b)>>4);
-        }
-        Tlc.update();
     }
     else if(driver==ALA_WS2812)
     {

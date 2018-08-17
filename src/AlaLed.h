@@ -27,24 +27,6 @@ public:
     */
     void initPWM(int numLeds, byte *pins);
 
-    /**
-    * Initializes LEDs driven by a TLC5940 chip. It be invoked in the setup() function of the main Arduino sketch.
-    * The TLC5940 must be wired as follows (http://XYXYXYXY)
-    * pin  2 > GND
-    * pin  3 > Arduino 11
-    * pin  4 > Arduino 13
-    * pin  5 > Arduino 9
-    * pin  6 > Arduino 10 + XXX resistor to +5V
-    * pin  7 > GND
-    * pin  8 > +5V
-    * pin  9 > xxx resistor to GND
-    * pin 10 > +5V
-    * pin 11 > Arduino 3
-    *
-    * It can be used also to drive a single led.
-    */
-    void initTLC5940(int numLeds, byte *pins);
-
 
     /**
     * Sets the maximum brightness level (0-255).
@@ -96,7 +78,7 @@ private:
     void flame();
 
 
-    byte driver; // type of led driver: ALA_PWM, ALA_TLC5940
+    byte driver; // type of led driver: ALA_PWM
     byte *pins;  // pins where the leds are attached to
     byte *leds;  // array to store leds brightness values
     int numLeds; // number of leds
